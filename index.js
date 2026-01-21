@@ -10,12 +10,13 @@ app.use(express.json());
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 
 app.get("/webhook", (req, res) => {
-    const verify_token = "meu_token";
+    
     const mode = req.query["hub.mode"];
     const token = req.query["hub.verify_token"];
     const challenge = req.query["hub.challenge"];
 
-    if (mode === "subscribe" && token === verify_token) {
+    if (mode === "subscribe" && token === VERIFY_TOKEN) {
+        console.log("WEBHOOK_VERIFICADO");
         return res.status(200).send(challenge);
     }
     return res.sendStatus(403);
