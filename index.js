@@ -38,7 +38,7 @@ app.post("/webhook", async (req, res) => {
 });
 
 async function perguntarIA(texto) {
-    const respons = await axios.post(
+    const response = await axios.post(
         "https://api.openai.com/v1/chat/completions",
         {
             model: "gpt-4o-mini",
@@ -61,10 +61,10 @@ async function perguntarIA(texto) {
 
 async function responderWhatssApp(numero, mensagem) {
     await axios.post(
-        'https://graph.facebook.com/v18.0/${process.env.PHONE_NUMBER_ID}/messages',
+        `https://graph.facebook.com/v18.0/${process.env.PHONE_NUMBER_ID}/messages`,
         {
-            messaging_production: "whatsapp",
-            to: nunmero,
+            messaging_product: "whatsapp",
+            to: numero,
             text: { body: mensagem }
         },
         {
