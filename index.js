@@ -7,6 +7,7 @@ app.use(express.json());
 
 // Verificacao do webhook (Meta pede isso)
 
+const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 
 app.get("/webhook", (req, res) => {
     const verify_token = "meu_token";
