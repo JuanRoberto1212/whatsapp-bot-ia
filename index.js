@@ -23,18 +23,27 @@ app.get("/webhook", (req, res) => {
 });
 
 app.post("/webhook", async (req, res) => {
-    const msg =
-        req.body.entry?.[0]?.changes?.[0]?.value?.messages?.[0];
+    console.log("Recebi algo no POST!"); // Issto PRECISA aparecer no log do Railway
 
-    if (!msg) return res.sendStatus(200);
+    const entry = req.body.entry?.[0];
+    const changes = entry?.changes?.[0];
+    const value = changes?.value;
+    const msg = value?.messages?.[0];
 
-    const text = msg.text.body;
-    const from = msg.from;
+    if (msg && msg.text) {
+        const text = msg.text.body;
+        const from = msg.from;
+        console.log(`Mensagem de ${from}: ${text}`);
 
-    const aiResponse = await perguntarIA(text);
-    await responderWhatssap(from, aiResponse);
+        try {
+            const aiResponse = await perguntarIA(text);
+            await responderWhatssApp(from, aiResponse);
+        } catch (err) {
+            console.error("Erro ao responder:", err.message);
+        }
+    }
 
-    res.sendStatus(200);
+    res.sendStatus(200); // Sempre responda 200 para o Meta não travar seu webhook
 });
 
 async function perguntarIA(texto) {
