@@ -8,7 +8,7 @@ app.use(express.json());
 // Armazenamento temporário de estados (em produção, use Redis ou Banco de Dados)
 const userSessions = {};
 
-const CONTACT_NUMBER = "11943789843";
+const CONTACT_NUMBER = "5511943789843";
 
 // Dados dos Planos baseados na imagem enviada
 const PLANOS_INFO = {
